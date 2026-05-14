@@ -1,0 +1,41 @@
+---
+title: "深入理解 Transformer 的 Attention 机制"
+date: "2026-05-01"
+description: "一篇适合初学者的 Attention 机制入门"
+tags: ["AI", "Transformer", "深度学习"]
+---
+
+Transformer 架构的核心是 Attention 机制。这篇文章用最直观的方式解释它。
+
+## 什么是 Attention？
+
+简单说，Attention 就是"关注重点"。
+
+当你读这句话时，你的眼睛会聚焦在特定的词上。Attention 做的就是这件事——告诉模型"应该关注哪里"。
+
+## 数学原理
+
+Self-Attention 的核心公式：
+
+**Q (Query)** × **K (Key)**^T → 相似度分数 → **Softmax** → 权重 → × **V (Value)**
+
+每一步的作用：
+- **Q**：当前词"想问什么"
+- **K**：其他词"有什么"
+- **V**：其他词"有什么信息"
+- **Softmax**：把分数变成概率
+
+## 为什么 Multi-Head 更好？
+
+一个头只能关注一种关系。多个头可以同时关注：
+- 语法关系
+- 语义关系
+- 位置关系
+
+> "Attention is all you need." — Vaswani et al., 2017
+
+## 实际应用
+
+从 GPT 到 Claude，从 BERT 到 LLaMA，所有现代 LLM 都建立在 Transformer 之上。
+
+理解 Attention，就理解了现代 AI 的半壁江山。

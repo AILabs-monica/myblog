@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: #2563eb;
+  --color-accent: #f59e0b;
+  --color-bg: #ffffff;
+  --color-bg-dark: #0f172a;
+  --color-text: #1e293b;
+  --color-text-dark: #e2e8f0;
+  --color-muted: #64748b;
+  --color-muted-dark: #94a3b8;
+  --color-border: #e2e8f0;
+  --color-border-dark: #334155;
+}
+
+body {
+  @apply bg-bg text-text dark:bg-bg-dark dark:text-text-dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+
+.article-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.dark .article-content h2 {
+  border-bottom-color: var(--color-border-dark);
+}
+
+.article-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-content p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.article-content a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.article-content a:hover {
+  opacity: 0.8;
+}
+
+.article-content blockquote {
+  border-left: 3px solid var(--color-primary);
+  background: #f8fafc;
+  padding: 0.75rem 1rem;
+  margin: 1.25rem 0;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  color: #475569;
+}
+
+.dark .article-content blockquote {
+  background: #1e293b;
+  color: #cbd5e1;
+}
+
+.article-content pre {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.article-content code {
+  font-size: 0.875rem;
+  background: #f1f5f9;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-family: "SF Mono", "Fira Code", monospace;
+}
+
+.dark .article-content code {
+  background: #334155;
+}
+
+.article-content pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  color: inherit;
+}
+
+.article-content ul,
+.article-content ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+  line-height: 1.8;
+}
+
+.article-content li {
+  margin-bottom: 0.25rem;
+}
+
+.article-content img {
+  border-radius: 0.5rem;
+  margin: 1.5rem auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.article-content strong {
+  font-weight: 600;
+}
+
+.article-content hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2rem 0;
+}
+
+.dark .article-content hr {
+  border-top-color: var(--color-border-dark);
+}
