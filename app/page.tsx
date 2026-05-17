@@ -7,32 +7,41 @@ export default function Home() {
 
   return (
     <div>
-      <section className="mb-12">
-        <h1 className="text-3xl font-bold tracking-tight mb-2">Monica&apos;s Blog</h1>
-        <p className="text-muted dark:text-muted-dark text-base">
+      <section style={{ marginBottom: '3rem' }}>
+        <h1 style={{
+          fontSize: '2rem', fontWeight: 700, fontStyle: 'italic',
+          letterSpacing: '-0.02em', marginBottom: '0.5rem', color: 'var(--text-1)',
+        }}>Monica&apos;s Blog</h1>
+        <p style={{ color: 'var(--text-2)', fontSize: '1rem' }}>
           AI 技术 · 独立开发 · 产品思考
         </p>
       </section>
 
       <section>
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-base font-semibold tracking-wide text-muted dark:text-muted-dark uppercase">最新文章</h2>
-          <Link
-            href="/ai"
-            className="text-sm text-primary hover:underline"
-          >
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          marginBottom: '1.5rem',
+        }}>
+          <h2 style={{
+            fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.05em',
+            textTransform: 'uppercase', color: 'var(--text-3)',
+          }}>最新文章</h2>
+          <Link href="/ai" style={{
+            fontSize: '0.875rem', color: 'var(--accent)',
+            textDecoration: 'underline', textUnderlineOffset: '2px',
+          }}>
             查看全部 →
           </Link>
         </div>
-        <div className="space-y-3">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {posts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
         </div>
         {posts.length === 0 && (
-          <div className="text-center py-16 text-muted dark:text-muted-dark">
-            <p className="text-lg mb-2">还没有文章</p>
-            <p className="text-sm">在 content/ 目录下创建 .mdx 文件即可发布</p>
+          <div style={{ textAlign: 'center', padding: '4rem 0', color: 'var(--text-3)' }}>
+            <p style={{ fontSize: '1.125rem', marginBottom: '0.5rem' }}>还没有文章</p>
+            <p style={{ fontSize: '0.875rem' }}>在 content/ 目录下创建 .mdx 文件即可发布</p>
           </div>
         )}
       </section>

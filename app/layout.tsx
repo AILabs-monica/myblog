@@ -25,28 +25,50 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className="min-h-screen bg-bg text-text dark:bg-bg-dark dark:text-text-dark">
-        <nav className="sticky top-0 z-50 border-b border-border/60 dark:border-border-dark/60 bg-bg/75 dark:bg-bg-dark/75 backdrop-blur-md">
-          <div className="mx-auto max-w-3xl px-4 py-3 flex items-center justify-between">
-            <a href="/" className="text-base font-semibold tracking-tight text-text dark:text-text-dark hover:text-primary dark:hover:text-primary transition-colors">
-              Monica&apos;s Blog
+      <body>
+        <nav style={{
+          position: 'sticky', top: 0, zIndex: 50,
+          borderBottom: '2.5px solid #111',
+          background: 'var(--bg)',
+          backdropFilter: 'blur(8px)',
+        }}>
+          <div style={{
+            maxWidth: '768px', margin: '0 auto', padding: '0.75rem 1rem',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          }}>
+            <a href="/" style={{
+              fontSize: '1rem', fontWeight: 800, color: 'var(--text-1)',
+              textDecoration: 'none', letterSpacing: '-0.02em',
+            }}>
+              ✦ Monica&apos;s Blog
             </a>
-            <div className="flex items-center gap-5 text-sm">
-              <a href="/" className="text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary transition-colors">首页</a>
-              <a href="/ai" className="text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary transition-colors">AI</a>
-              <a href="/products" className="text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary transition-colors">产品</a>
-              <a href="/about" className="text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary transition-colors">关于我</a>
-              <button id="theme-toggle" className="ml-1 p-1 rounded-md text-muted dark:text-muted-dark hover:text-primary dark:hover:text-primary hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="切换主题">
-                🌙
-              </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', fontSize: '0.875rem', fontWeight: 600 }}>
+              <a href="/" style={{ color: 'var(--text-2)', textDecoration: 'none' }}>首页</a>
+              <a href="/ai" style={{ color: 'var(--text-2)', textDecoration: 'none' }}>AI</a>
+              <a href="/products" style={{ color: 'var(--text-2)', textDecoration: 'none' }}>产品</a>
+              <a href="/about" style={{ color: 'var(--text-2)', textDecoration: 'none' }}>关于我</a>
+              <button id="theme-toggle" style={{
+                padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-sm)',
+                color: 'var(--text-2)', cursor: 'pointer',
+                border: '2.5px solid #111', background: 'var(--accent-3)',
+                fontSize: '1rem', fontWeight: 700,
+              }} aria-label="切换主题">🌙</button>
             </div>
           </div>
         </nav>
-        <main className="mx-auto max-w-3xl px-4 py-10">
+        <main style={{
+          maxWidth: '768px', margin: '0 auto', padding: '2.5rem 1rem',
+        }}>
           {children}
         </main>
-        <footer className="border-t border-border/60 dark:border-border-dark/60 mt-16">
-          <div className="mx-auto max-w-3xl px-4 py-8 text-center text-xs text-muted dark:text-muted-dark">
+        <footer style={{
+          borderTop: '2.5px solid #111', marginTop: '4rem',
+        }}>
+          <div style={{
+            maxWidth: '768px', margin: '0 auto', padding: '2rem 1rem',
+            textAlign: 'center', fontSize: '0.75rem', color: 'var(--text-3)',
+            fontWeight: 600,
+          }}>
             <p>© {new Date().getFullYear()} Monica&apos;s Blog</p>
           </div>
         </footer>

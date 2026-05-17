@@ -151,49 +151,65 @@ export default async function PostPage({ params }: Props) {
 
   return (
     <article>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1 text-sm text-muted dark:text-muted-dark hover:text-primary transition-colors mb-8"
-        >
-          ← 返回首页
-        </Link>
+      <Link
+        href="/"
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: '0.25rem',
+          fontSize: '0.875rem', color: 'var(--text-2)',
+          textDecoration: 'none', marginBottom: '2rem',
+        }}
+      >
+        ← 返回首页
+      </Link>
 
-        <header className="mb-10 pb-6 border-b border-border/60 dark:border-border-dark/60">
-          <div className="flex items-center gap-2 text-sm text-muted dark:text-muted-dark mb-4">
-            <Link
-              href={`/${post.category}`}
-              className="font-semibold text-primary dark:text-primary tracking-wide hover:underline"
-            >
-              {post.category}
-            </Link>
-            {post.date && (
-              <>
-                <span>·</span>
-                <time>{post.date}</time>
-              </>
-            )}
-            <span>·</span>
-            <span>{post.readingTime} 分钟阅读</span>
+      <header style={{
+        marginBottom: '2.5rem', paddingBottom: '1.5rem',
+        borderBottom: '1px solid var(--border)',
+      }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '0.5rem',
+          fontSize: '0.875rem', color: 'var(--text-3)', marginBottom: '1rem',
+        }}>
+          <Link
+            href={`/${post.category}`}
+            style={{ fontWeight: 600, color: 'var(--accent)', letterSpacing: '0.05em' }}
+          >
+            {post.category}
+          </Link>
+          {post.date && (
+            <>
+              <span>·</span>
+              <time>{post.date}</time>
+            </>
+          )}
+          <span>·</span>
+          <span>{post.readingTime} 分钟阅读</span>
+        </div>
+        <h1 style={{
+          fontSize: '1.875rem', fontWeight: 700, fontStyle: 'italic',
+          letterSpacing: '-0.02em', lineHeight: 1.2, marginBottom: '0.75rem',
+          color: 'var(--text-1)',
+        }}>{post.title}</h1>
+        {post.description && (
+          <p style={{ fontSize: '1rem', color: 'var(--text-2)', lineHeight: 1.6 }}>
+            {post.description}
+          </p>
+        )}
+        {post.tags.length > 0 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '1.25rem' }}>
+            {post.tags.map((tag) => (
+              <span key={tag} style={{
+                fontSize: '0.75rem', padding: '0.125rem 0.5rem',
+                borderRadius: 'var(--radius-sm)',
+                background: 'var(--bg-soft)', color: 'var(--text-2)',
+                border: '1px solid var(--border)',
+              }}>
+                {tag}
+              </span>
+            ))}
           </div>
-          <h1 className="text-3xl font-bold tracking-tight leading-tight mb-3">{post.title}</h1>
-          {post.description && (
-            <p className="text-base text-muted dark:text-muted-dark leading-relaxed">
-              {post.description}
-            </p>
-          )}
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-5">
-              {post.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className={`text-xs px-2.5 py-0.5 rounded-md border ${getTagColor(tag)}`}
-                  >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </header>
+        )}
+      </header>
 
       <MdxContent source={post.content || ''} />
     </article>
