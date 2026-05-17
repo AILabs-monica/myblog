@@ -1,0 +1,301 @@
+---
+title: "手机一震，电脑自己写起了代码"
+date: "2026-05-17"
+description: "什么意思？你人在地铁上、咖啡馆里、甚至躺在沙发上刷手机——点一下 ChatGPT 应用，你工位上的 Mac 就开始自动写代码、修 bug、跑测试、提 PR。所有操作实时推送到你手机上，你能审批、能查看、能中途改指令。"
+tags: ["AI"]
+---
+
+<p class="mb-4 leading-relaxed">5月15日，OpenAI 干了一件让开发者又兴奋又后背发凉的事：<strong>Codex 可以手机远程控制了。</strong></p>
+
+    <p class="mb-4 leading-relaxed">什么意思？你人在地铁上、咖啡馆里、甚至躺在沙发上刷手机——点一下 ChatGPT 应用，你工位上的 Mac 就开始自动写代码、修 bug、跑测试、提 PR。所有操作实时推送到你手机上，你能审批、能查看、能中途改指令。</p>
+
+    <p class="mb-4 leading-relaxed">听起来像一个懒人开发者的终极梦想。</p>
+
+    <p class="mb-4 leading-relaxed">但等等，就在同一天，OpenAI 刚被集体诉讼，指控 ChatGPT 内置追踪工具把用户数据传给谷歌和 Meta。前两天，TanStack 供应链攻击波及 OpenAI，Mac 版 ChatGPT 被迫强制更新。再往前，亚马逊员工被曝"刷 AI 用量"虚耗算力。</p>
+
+    <p class="mb-4 leading-relaxed">在这个节骨眼上，OpenAI 给你的 Mac 开了一个手机遥控器。你敢用吗？</p>
+
+    <!-- SVG 1: 核心功能一览 -->
+    <div class="my-8 max-w-full overflow-hidden">
+      <svg width="100%" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="font-family:system-ui, -apple-system, sans-serif;">
+        <rect x="10" y="10" width="680" height="300" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2" rx="12"/>
+        <text x="350" y="50" text-anchor="middle" font-size="15" font-weight="bold" fill="#1E293B">图1：Codex 手机远程控制——功能全景</text>
+
+        <!-- 左侧：手机图标区 -->
+        <rect x="40" y="75" width="160" height="200" rx="20" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.5"/>
+        <text x="120" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="#3B82F6">📱 手机端 ChatGPT</text>
+        <text x="120" y="135" text-anchor="middle" font-size="12" fill="#1E293B">扫码配对 Mac</text>
+        <text x="120" y="158" text-anchor="middle" font-size="12" fill="#1E293B">查看实时进度</text>
+        <text x="120" y="181" text-anchor="middle" font-size="12" fill="#1E293B">审批代码提交</text>
+        <text x="120" y="204" text-anchor="middle" font-size="12" fill="#1E293B">发起新指令</text>
+        <text x="120" y="227" text-anchor="middle" font-size="12" fill="#1E293B">切换 AI 模型</text>
+        <text x="120" y="250" text-anchor="middle" font-size="12" fill="#1E293B">审查测试结果</text>
+
+        <!-- 箭头 -->
+        <text x="225" y="175" text-anchor="middle" font-size="20" fill="#3B82F6">→</text>
+
+        <!-- 右侧：Mac图标区 -->
+        <rect x="260" y="75" width="200" height="200" rx="12" fill="#F0FDF4" stroke="#10B981" stroke-width="1.5"/>
+        <text x="360" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="#10B981">💻 Mac 端 Codex</text>
+        <text x="360" y="135" text-anchor="middle" font-size="12" fill="#1E293B">云端隔离沙箱运行</text>
+        <text x="360" y="158" text-anchor="middle" font-size="12" fill="#1E293B">读写代码文件</text>
+        <text x="360" y="181" text-anchor="middle" font-size="12" fill="#1E293B">执行测试/lint</text>
+        <text x="360" y="204" text-anchor="middle" font-size="12" fill="#1E293B">自动 git commit</text>
+        <text x="360" y="227" text-anchor="middle" font-size="12" fill="#1E293B">生成 PR 描述</text>
+        <text x="360" y="250" text-anchor="middle" font-size="12" fill="#1E293B">引用终端日志</text>
+
+        <!-- 下方案例 -->
+        <rect x="490" y="75" width="180" height="200" rx="12" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1.5"/>
+        <text x="580" y="105" text-anchor="middle" font-size="13" font-weight="bold" fill="#F59E0B">⚡ 典型场景</text>
+        <text x="580" y="140" text-anchor="middle" font-size="12" fill="#1E293B">🔹 写单元测试</text>
+        <text x="580" y="168" text-anchor="middle" font-size="12" fill="#1E293B">🔹 重构老代码</text>
+        <text x="580" y="196" text-anchor="middle" font-size="12" fill="#1E293B">🔹 修 Bug</text>
+        <text x="580" y="224" text-anchor="middle" font-size="12" fill="#1E293B">🔹 写技术文档</text>
+        <text x="580" y="252" text-anchor="middle" font-size="12" fill="#1E293B">🔹 代码审查辅助</text>
+      </svg>
+    </div>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">到底怎么玩的？</h2>
+
+    <p class="mb-4 leading-relaxed">简单说，Codex 是 OpenAI 今年 5 月刚推出的云端软件工程 agent，跑的是专门为编程优化的 codex-1 模型（o3 的定制版）。它能在云端沙箱里并行处理多个编程任务，从写功能到修 bug 到提 PR，一条龙。</p>
+
+    <p class="mb-4 leading-relaxed">5月15日的新功能，就是给这个 agent 加了个"手机遥控器"。你只要在 Mac 上的 Codex 应用生成一个二维码，用手机 ChatGPT 扫一下，就配对成功。之后你离开电脑，手机就能实时看到 Codex 在 Mac 上的执行状态——终端输出、代码 diff、测试结果、审批请求，全部推送到你手机上。</p>
+
+    <p class="mb-4 leading-relaxed">你可以在手机上批不批准这次提交、要不要换一个模型重来、或者直接发一个新任务。OpenAI 说了，Codex for Windows 的远程控制"未来也会支持"。</p>
+
+    <p class="mb-4 leading-relaxed">搞开发的应该秒懂这玩意多香：写测试、修 bug、重构这些"重要但不想干"的活，全丢给 AI 在后台跑着，你在外面该干嘛干嘛，手机上点个批准就行了。</p>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">第一个问题：你的 Mac，还是你的 Mac 吗？</h2>
+
+    <p class="mb-4 leading-relaxed">OpenAI 在公告里有一句话很有意思："用户的文件、凭据和权限设置都留在运行 Codex 的原电脑上。"</p>
+
+    <p class="mb-4 leading-relaxed">翻译一下：Codex 不把敏感数据上传到 OpenAI 服务器，所有凭证留在本地。传到手机的只是截图、终端输出、代码 diff、测试结果这些"执行产物"。</p>
+
+    <p class="mb-4 leading-relaxed">听起来还行，对吧？</p>
+
+    <p class="mb-4 leading-relaxed">但仔细想想：<strong>"代码 diff"本身就可能包含敏感信息</strong>——数据库连接串的改动、API key 的配置变更、内部业务逻辑的片段。这些通过 ChatGPT 应用传到手机上，走的是 OpenAI 的推送通道。如果这个通道被中间人攻击？如果手机丢了？如果 ChatGPT 应用本身的隐私策略有漏洞？</p>
+
+    <p class="mb-4 leading-relaxed">别忘了，就在 Codex 远程功能上线的同一天，<strong>OpenAI 刚被集体诉讼</strong>，指控在 ChatGPT 网站中嵌入 Meta Pixel 和 Google Analytics 追踪工具，把用户输入内容和邮箱等可识别信息传给了 Meta 和 Google。[来源：IT之家]</p>
+
+    <p class="mb-4 leading-relaxed">一个刚被起诉侵犯隐私的公司，告诉你"放心，你的代码很安全"——你信吗？</p>
+
+    <!-- SVG 2: 风险对比图 -->
+    <div class="my-8 max-w-full overflow-hidden">
+      <svg width="100%" viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" style="font-family:system-ui, -apple-system, sans-serif;">
+        <rect x="10" y="10" width="680" height="360" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2" rx="12"/>
+        <text x="350" y="50" text-anchor="middle" font-size="15" font-weight="bold" fill="#1E293B">图2：Codex 远程控制——安全风险对照表</text>
+
+        <!-- 表头 -->
+        <rect x="40" y="70" width="170" height="35" rx="6" fill="#3B82F6"/>
+        <text x="125" y="92" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFFFFF">风险维度</text>
+        <rect x="215" y="70" width="220" height="35" rx="6" fill="#10B981"/>
+        <text x="325" y="92" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFFFFF">OpenAI 的承诺</text>
+        <rect x="440" y="70" width="220" height="35" rx="6" fill="#EF4444"/>
+        <text x="550" y="92" text-anchor="middle" font-size="13" font-weight="bold" fill="#FFFFFF">实际隐患</text>
+
+        <!-- 行1 -->
+        <text x="125" y="135" text-anchor="middle" font-size="12" fill="#1E293B">凭证安全</text>
+        <text x="325" y="135" text-anchor="middle" font-size="12" fill="#10B981">凭证留在本地</text>
+        <text x="550" y="135" text-anchor="middle" font-size="12" fill="#EF4444">代码 diff 含敏感信息</text>
+        <line x1="40" y1="145" x2="660" y2="145" stroke="#E2E8F0" stroke-width="1"/>
+
+        <!-- 行2 -->
+        <text x="125" y="168" text-anchor="middle" font-size="12" fill="#1E293B">传输通道</text>
+        <text x="325" y="168" text-anchor="middle" font-size="12" fill="#10B981">加密推送</text>
+        <text x="550" y="168" text-anchor="middle" font-size="12" fill="#EF4444">ChatGPT 曾被控数据外传</text>
+        <line x1="40" y1="178" x2="660" y2="178" stroke="#E2E8F0" stroke-width="1"/>
+
+        <!-- 行3 -->
+        <text x="125" y="201" text-anchor="middle" font-size="12" fill="#1E293B">手机端安全</text>
+        <text x="325" y="201" text-anchor="middle" font-size="12" fill="#10B981">扫码配对</text>
+        <text x="550" y="201" text-anchor="middle" font-size="12" fill="#EF4444">手机丢失=远程入口暴露</text>
+        <line x1="40" y1="211" x2="660" y2="211" stroke="#E2E8F0" stroke-width="1"/>
+
+        <!-- 行4 -->
+        <text x="125" y="234" text-anchor="middle" font-size="12" fill="#1E293B">供应链</text>
+        <text x="325" y="234" text-anchor="middle" font-size="12" fill="#10B981">沙箱隔离运行</text>
+        <text x="550" y="234" text-anchor="middle" font-size="12" fill="#EF4444">TanStack 攻击刚波及 OpenAI</text>
+        <line x1="40" y1="244" x2="660" y2="244" stroke="#E2E8F0" stroke-width="1"/>
+
+        <!-- 行5 -->
+        <text x="125" y="267" text-anchor="middle" font-size="12" fill="#1E293B">隐私政策</text>
+        <text x="325" y="267" text-anchor="middle" font-size="12" fill="#10B981">宽泛表述涵盖共享</text>
+        <text x="550" y="267" text-anchor="middle" font-size="12" fill="#EF4444">用户数据可能用于分析</text>
+        <line x1="40" y1="277" x2="660" y2="277" stroke="#E2E8F0" stroke-width="1"/>
+
+        <!-- 行6 -->
+        <text x="125" y="300" text-anchor="middle" font-size="12" fill="#1E293B">代码归属</text>
+        <text x="325" y="300" text-anchor="middle" font-size="12" fill="#10B981">代码归用户</text>
+        <text x="550" y="300" text-anchor="middle" font-size="12" fill="#EF4444">AI 生成的代码版权模糊</text>
+
+        <!-- 脚注 -->
+        <text x="350" y="345" text-anchor="middle" font-size="11" fill="#64748B">数据来源：OpenAI 官方公告、IT之家报道、集体诉讼文件</text>
+      </svg>
+    </div>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">TanStack 攻击：OpenAI 自己都没防住</h2>
+
+    <p class="mb-4 leading-relaxed">就在 Codex 远程功能发布的前一天，5月14日，OpenAI 发了一则公告：受开源库 TanStack 供应链攻击影响，<strong>Mac 版 ChatGPT 必须在 6 月 12 日前强制更新</strong>。[来源：IT之家]</p>
+
+    <p class="mb-4 leading-relaxed">事情是这样的：5月11日，知名开源前端库 TanStack 遭遇了代号"Mini Shul-Hulud"的供应链攻击。OpenAI 有两台员工设备中招。黑客成功偷走了部分凭证，而关键问题是——这些凭证具备为 OpenAI 产品<strong>签署证书</strong>的能力。</p>
+
+    <p class="mb-4 leading-relaxed">OpenAI 不得不撤销所有现有证书，阻止使用旧证书签名的应用打开。这意味着每一台 Mac 上的 ChatGPT 都得更新，不然就废了。</p>
+
+    <p class="mb-4 leading-relaxed">怎么解读这事很简单：<strong>连 OpenAI 自己的员工都防不住供应链攻击</strong>。他们开发 Codex 用的工具链、依赖的开源库，跟普通开发者没什么两样。如果 OpenAI 的后院都能起火，你怎么保证你通过 Codex 远程提交的代码不会在某一天被"加料"？</p>
+
+    <p class="mb-4 leading-relaxed">OpenAI 说 Codex 的运行环境是"云端安全隔离沙箱"，执行期间互联网被禁用。但代码最终要合并回你的本地仓库、部署到生产环境。沙箱再干净，出口那一关才是真正的防线。</p>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">隐私诉讼：OpenAI 的数据"自来水管"</h2>
+
+    <p class="mb-4 leading-relaxed">5月15日，就在 Codex 远程功能上线当天，OpenAI 在加州被集体诉讼。原告指控 ChatGPT 网站嵌入了 Meta Pixel 和 Google Analytics 追踪工具，把用户数据传给 Meta 和 Google。[来源：IT之家]</p>
+
+    <p class="mb-4 leading-relaxed">诉状说得挺具体：邮箱地址、用户 ID、用户输入的查询文本——这些可能实时流向了第三方。你问 ChatGPT "我最近胸口疼是怎么回事"、你让它写一份竞品分析报告、你把一段内部代码贴进去让它 review——这些内容，按原告的说法，可能已经进了 Meta 和 Google 的数据管道。</p>
+
+    <p class="mb-4 leading-relaxed">当然，法律上这事没那么简单。Cybernews 研究员指出，OpenAI 的隐私政策用了很宽泛的表述，说明可能会与第三方共享数据用于分析改进。用户注册时通常也点了同意。但"合法"和"让人放心"是两码事。</p>
+
+    <p class="mb-4 leading-relaxed">放到 Codex 远程控制的语境里想：你手机上的 ChatGPT 正在接收来自你 Mac 的代码 diff、终端日志、测试输出。如果 ChatGPT 应用本身的数据管道存在同样的追踪机制，那你的商业代码片段可能正在被悄然外传。</p>
+
+    <p class="mb-4 leading-relaxed">你品，你细品。</p>
+
+    <!-- SVG 3: 安全事件时间线 -->
+    <div class="my-8 max-w-full overflow-hidden">
+      <svg width="100%" viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" style="font-family:system-ui, -apple-system, sans-serif;">
+        <rect x="10" y="10" width="680" height="320" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2" rx="12"/>
+        <text x="350" y="50" text-anchor="middle" font-size="15" font-weight="bold" fill="#1E293B">图3：OpenAI 5月中旬安全事件时间线</text>
+
+        <!-- 时间线 -->
+        <line x1="60" y1="100" x2="640" y2="100" stroke="#CBD5E1" stroke-width="3"/>
+        <circle cx="120" cy="100" r="10" fill="#EF4444"/>
+        <circle cx="280" cy="100" r="10" fill="#F59E0B"/>
+        <circle cx="460" cy="100" r="10" fill="#F59E0B"/>
+        <circle cx="600" cy="100" r="10" fill="#EF4444"/>
+
+        <!-- 事件标签 -->
+        <text x="120" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#EF4444">5月11日</text>
+        <text x="120" y="155" text-anchor="middle" font-size="11" fill="#1E293B">TanStack 供应链攻击</text>
+        <text x="120" y="172" text-anchor="middle" font-size="11" fill="#1E293B">开源库被植入恶意代码</text>
+
+        <text x="280" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#F59E0B">5月13日</text>
+        <text x="280" y="155" text-anchor="middle" font-size="11" fill="#1E293B">亚马逊员工"刷AI用量"</text>
+        <text x="280" y="172" text-anchor="middle" font-size="11" fill="#1E293B">虚耗算力丑闻曝光</text>
+
+        <text x="460" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#F59E0B">5月14日</text>
+        <text x="460" y="155" text-anchor="middle" font-size="11" fill="#1E293B">OpenAI 确认受TanStack波及</text>
+        <text x="460" y="172" text-anchor="middle" font-size="11" fill="#1E293B">要求Mac版ChatGPT强制更新</text>
+
+        <text x="600" y="135" text-anchor="middle" font-size="12" font-weight="bold" fill="#EF4444">5月15日</text>
+        <text x="600" y="155" text-anchor="middle" font-size="11" fill="#1E293B">双重炸弹</text>
+        <text x="600" y="172" text-anchor="middle" font-size="11" fill="#1E293B">Codex 远程上线 + 隐私诉讼</text>
+
+        <!-- 底部说明 -->
+        <rect x="120" y="210" width="460" height="80" rx="8" fill="#FEF2F2" stroke="#FECACA" stroke-width="1"/>
+        <text x="350" y="235" text-anchor="middle" font-size="12" font-weight="bold" fill="#EF4444">⚠️ 关键观察</text>
+        <text x="350" y="258" text-anchor="middle" font-size="11" fill="#1E293B">Codex 远程控制在安全事件最密集的节点上线</text>
+        <text x="350" y="278" text-anchor="middle" font-size="11" fill="#1E293B">OpenAI 同时面临外部攻击 + 隐私诉讼 + 信任危机</text>
+
+        <text x="350" y="315" text-anchor="middle" font-size="11" fill="#64748B">数据来源：IT之家、OpenAI官方公告</text>
+      </svg>
+    </div>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">"刷 AI 用量"背后的算力泡沫</h2>
+
+    <p class="mb-4 leading-relaxed">还有一件事值得放在一起看。</p>
+
+    <p class="mb-4 leading-relaxed">5月13日，英国《金融时报》爆出：<strong>亚马逊员工承认"刷 AI 用量"</strong>——用公司自研的 MeshClaw 平台刻意刷高 AI 词元消耗量，因为公司要求 80% 以上的研发人员每周必须使用 AI 工具，还有内部排行榜实时统计消耗数据。[来源：IT之家/金融时报]</p>
+
+    <p class="mb-4 leading-relaxed">这不是孤例。上个月 Meta 和微软也被曝出同样的问题。"词元刷量（tokenmaxxing）"甚至已经成了行业术语。</p>
+
+    <p class="mb-4 leading-relaxed">这跟 Codex 远程控制有什么关系？关系大了。Codex 本质上就是在"刷"你的 GPU 算力——当然，是正当用途。但问题是：<strong>当 AI 工具的使用量成为考核指标，当远程控制让"挂机消耗算力"变得毫无门槛，你怎么区分真实需求和数据注水？</strong></p>
+
+    <p class="mb-4 leading-relaxed">亚马逊、微软、谷歌、Meta 四家 2026 年合计资本开支预计在 6500 亿至 7000 亿美元。华尔街预测 2027 年将突破 1 万亿美元。这些天文数字的基础设施投入，依据的是"AI 算力需求将持续暴增"的市场预期。但如果相当一部分消耗是刷出来的、挂出来的、为了完成 KPI 硬造出来的——那这个泡沫什么时候破？</p>
+
+    <p class="mb-4 leading-relaxed">Codex 远程控制让每个人都能随时随地让 AI 跑代码。便利是真便利，但也让"算力消耗"变得更难追踪、更难审计。</p>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">OpenAI 的安全防线：真的够吗？</h2>
+
+    <p class="mb-4 leading-relaxed">客观说，OpenAI 在 Codex 上还是做了一些安全设计的：</p>
+
+    <p class="mb-4 leading-relaxed">第一，<strong>沙箱隔离</strong>。每个 Codex 任务在独立的云端容器中运行，互联网被禁用。agent 只能访问你通过 GitHub 提供的代码和预设的依赖环境，不能访问外部网站或 API。</p>
+
+    <p class="mb-4 leading-relaxed">第二，<strong>可审计</strong>。Codex 的每一步操作都有引用——终端日志、测试输出、代码 diff，全部可追溯。你可以审查 AI 干了什么再决定是否合并。</p>
+
+    <p class="mb-4 leading-relaxed">第三，<strong>凭证本地留存</strong>。至少 OpenAI 是这么承诺的：文件、凭证、权限设置都留在原电脑上。</p>
+
+    <p class="mb-4 leading-relaxed">但防线有裂口：</p>
+
+    <p class="mb-4 leading-relaxed">裂口一：<strong>供应链攻击的面太大</strong>。TanStack 事件证明，OpenAI 依赖的开源生态跟所有人一样脆弱。一个前端库被黑，就能导致 ChatGPT Mac 版全线瘫痪。Codex 依赖的依赖链更长更复杂。</p>
+
+    <p class="mb-4 leading-relaxed">裂口二：<strong>隐私政策太宽</strong>。OpenAI 的隐私政策允许与第三方共享数据用于"分析和改进产品"。在 Codex 远程控制的场景下，"分析改进"的边界是什么？你的代码 diff 会不会被用来训练下一个模型？OpenAI 至今没有明确回答。</p>
+
+    <p class="mb-4 leading-relaxed">裂口三：<strong>手机端是最薄弱环节</strong>。你 Mac 的安全策略做得再好，只要手机丢了、手机被黑了，一切白搭。扫码配对机制虽然方便，但也意味着只要有人拿到你解锁的手机，就能看到你的代码变更、测试结果，甚至发起新任务。</p>
+
+    <p class="mb-4 leading-relaxed">裂口四：<strong>企业合规风险</strong>。很多公司的信息安全政策明确禁止将代码上传到第三方 AI 服务。Codex 远程控制让这种合规监管变得更难——员工可以在公司不知情的情况下，用个人手机远程操作公司电脑上的代码。</p>
+
+    <!-- SVG 4: 安全评估矩阵 -->
+    <div class="my-8 max-w-full overflow-hidden">
+      <svg width="100%" viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" style="font-family:system-ui, -apple-system, sans-serif;">
+        <rect x="10" y="10" width="680" height="300" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2" rx="12"/>
+        <text x="350" y="50" text-anchor="middle" font-size="15" font-weight="bold" fill="#1E293B">图4：Codex 远程控制安全评估——防御 vs 风险</text>
+
+        <!-- 防御措施（左） -->
+        <text x="190" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#10B981">✅ OpenAI 的防御</text>
+        <rect x="40" y="100" width="300" height="35" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+        <text x="190" y="122" text-anchor="middle" font-size="12" fill="#1E293B">云端沙箱隔离 + 互联网禁用</text>
+        <rect x="40" y="142" width="300" height="35" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+        <text x="190" y="164" text-anchor="middle" font-size="12" fill="#1E293B">每一步操作可审计、可追溯</text>
+        <rect x="40" y="184" width="300" height="35" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+        <text x="190" y="206" text-anchor="middle" font-size="12" fill="#1E293B">凭证和敏感文件本地留存</text>
+        <rect x="40" y="226" width="300" height="35" rx="6" fill="#F0FDF4" stroke="#10B981" stroke-width="1"/>
+        <text x="190" y="248" text-anchor="middle" font-size="12" fill="#1E293B">训练模型识别并拒接恶意请求</text>
+
+        <!-- VS -->
+        <text x="350" y="175" text-anchor="middle" font-size="20" font-weight="bold" fill="#CBD5E1">VS</text>
+
+        <!-- 风险（右） -->
+        <text x="510" y="85" text-anchor="middle" font-size="13" font-weight="bold" fill="#EF4444">❌ 未解决的隐患</text>
+        <rect x="360" y="100" width="300" height="35" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+        <text x="510" y="122" text-anchor="middle" font-size="12" fill="#1E293B">代码 diff 中含敏感信息外传</text>
+        <rect x="360" y="142" width="300" height="35" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+        <text x="510" y="164" text-anchor="middle" font-size="12" fill="#1E293B">隐私政策宽泛，数据用途不透明</text>
+        <rect x="360" y="184" width="300" height="35" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+        <text x="510" y="206" text-anchor="middle" font-size="12" fill="#1E293B">手机端安全薄弱（丢机/被黑）</text>
+        <rect x="360" y="226" width="300" height="35" rx="6" fill="#FEF2F2" stroke="#EF4444" stroke-width="1"/>
+        <text x="510" y="248" text-anchor="middle" font-size="12" fill="#1E293B">供应链攻击历史，防线存疑</text>
+      </svg>
+    </div>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">所以，用还是不用？</h2>
+
+    <p class="mb-4 leading-relaxed">我不是要劝你别用。Codex 本身确实是个好东西——400 万周活用户不是白来的。让 AI 在后台帮你跑测试、修 bug、写文档，你去做更有创造力的事，这个愿景没人会反对。</p>
+
+    <p class="mb-4 leading-relaxed">但用之前，你得心里有数：</p>
+
+    <p class="mb-4 leading-relaxed"><strong>如果你是个人开发者</strong>：别把包含敏感信息的代码丢给 Codex。别在公司不允许的环境下使用。手机锁屏密码设好。开启双重认证。</p>
+
+    <p class="mb-4 leading-relaxed"><strong>如果你是团队负责人</strong>：在团队用 Codex 之前，先定义清楚什么代码能远程操作、什么不能。弄清楚你们公司信息安全政策对 AI 编程工具的态度。考虑用 Codex 的企业版而不是个人版——至少数据和合规的保护会多一些。</p>
+
+    <p class="mb-4 leading-relaxed"><strong>如果你是 CTO/CIO</strong>：是时候把 AI 编程工具纳入正式的安全审计流程了。Codex 不会是最后一个，也肯定不是最危险的一个。但每个新工具上线前，搞清楚数据流、访问控制、合规边界，这钱省不了。</p>
+
+    <p class="mb-4 leading-relaxed">OpenAI 说得好：用户必须"手动审查并验证所有 agent 生成的代码，然后再集成和执行"。这句话在 AI 的官方文档里，但<strong>它应该是每个团队的铁律</strong>。</p>
+
+    <h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">结尾</h2>
+
+    <p class="mb-4 leading-relaxed">手机一震，电脑自己写起了代码。</p>
+
+    <p class="mb-4 leading-relaxed">2026 年的开发者，活的确实很科幻。</p>
+
+    <p class="mb-4 leading-relaxed">但也正因为我们活在科幻世界里，才更需要保持清醒。Codex 手机远程控制是生产力的跃升，也是一道新的安全算式。这道题的答案不是"不用"，而是"懂得怎么用"。</p>
+
+    <p class="mb-4 leading-relaxed">你怎么看？评论区聊聊。</p>
+
+    <!-- 引用来源 -->
+    <hr class="my-12">
+    <h2 class="text-xl font-bold mb-4">引用来源</h2>
+    <ol class="list-decimal list-inside text-sm text-slate-600 space-y-1">
+      <li>OpenAI 官方公告 — <a href="https://openai.com/index/introducing-codex/" class="text-blue-500 hover:underline" target="_blank">https://openai.com/index/introducing-codex/</a></li>
+      <li>IT之家：不用守电脑：手机端 ChatGPT 解锁 Codex — <a href="https://www.ithome.com/0/950/673.htm" class="text-blue-500 hover:underline" target="_blank">https://www.ithome.com/0/950/673.htm</a></li>
+      <li>IT之家：OpenAI 在美国遭集体诉讼 — <a href="https://www.ithome.com/0/951/210.htm" class="text-blue-500 hover:underline" target="_blank">https://www.ithome.com/0/951/210.htm</a></li>
+      <li>IT之家：开源库 TanStack 被黑波及 OpenAI — <a href="https://www.ithome.com/0/950/666.htm" class="text-blue-500 hover:underline" target="_blank">https://www.ithome.com/0/950/666.htm</a></li>
+      <li>IT之家：亚马逊员工承认“刷 AI 用量” — <a href="https://www.ithome.com/0/949/900.htm" class="text-blue-500 hover:underline" target="_blank">https://www.ithome.com/0/949/900.htm</a></li>
+      <li>OpenAI Codex 系统卡附录 — <a href="https://openai.com/index/o3-o4-mini-codex-system-card-addendum/" class="text-blue-500 hover:underline" target="_blank">https://openai.com/index/o3-o4-mini-codex-system-card-addendum/</a></li>
+    </ol>

@@ -118,6 +118,11 @@ body {
   height: auto;
 }
 
+.article-content svg {
+  max-width: 100%;
+  height: auto;
+}
+
 .article-content strong {
   font-weight: 600;
 }

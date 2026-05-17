@@ -1,0 +1,77 @@
+---
+title: "用 HyperFrame 把 HTML 转视频？我遇到了乱码"
+date: "2026-05-17"
+description: "用 HyperFrame 将已有 HTML 渲染成视频时遇到的中文乱码问题和排查记录"
+tags: ["AI", "HyperFrame", "视频生成", "踩坑"]
+---
+
+前两天尝试用 HyperFrame 把一个已有的 HTML 页面转成视频。HTML 本身在浏览器里显示完全正常，但是通过 HyperFrame 录制出来的视频里，页面出现了乱码。
+
+## 现象
+
+视频能正常录制，画面布局也没问题，但页面上所有的中文字符都变成了方块。
+
+看起来像是字体缺失的问题。
+
+## 排查过程
+
+HyperFrame 的渲染流程大致是这样的：
+
+1. 读取 HTML 文件（UTF-8 编码）
+2. 启动一个本地 HTTP 服务器，设置正确的 Content-Type 头（`text/html; charset=utf-8`）
+3. 启动 headless Chrome 加载页面
+4. 等待字体加载完成后逐帧截图
+
+按理说编码链路是通的：HTML 里有 `<meta charset="UTF-8">`，服务器也返回了正确的 Content-Type，Chrome 本身也支持中文渲染。
+
+问题出在哪？
+
+翻了一下源码发现，HyperFrame 的 `deterministicFonts.ts` 里有一个字体别名系统——它会扫描页面的 `font-family` 声明，然后匹配预捆绑的字体。如果匹配不上，就尝试从 Google Fonts 下载。
+
+**预捆绑的 CJK 字体只有 Noto Sans JP（日文字体）**，没有 Noto Sans SC（简体中文）、Noto Sans TC（繁体中文）或其他常见中文字体。
+
+如果你的页面指定了 `font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;`，HyperFrame 的字体扫描器匹配不到预捆绑字体，会尝试从 Google Fonts 下载。但如果下载失败（网络问题、缓存问题），或者下载到的字体文件不完整，最终的渲染结果就会 fallback 到默认字体——而 headless Chrome 的默认字体通常不支持中文，于是显示成方块。
+
+## 复现条件
+
+- 页面使用了中文
+- `font-family` 指定的字体不在预捆绑列表里
+- Google Fonts 下载失败或超时
+- 加载的字体不包含中文 glyph（比如只加载了 Noto Sans JP 但页面是简体中文，部分字符依然缺失）
+
+## 暂时的解决办法
+
+比较直接的做法是在 HTML 中内联一个完整的中文字体 @font-face 声明：
+
+```css
+@font-face {
+  font-family: 'Noto Sans SC';
+  src: url('https://fonts.gstatic.com/...') format('woff2');
+  font-display: block;
+}
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+}
+```
+
+或者把字体文件放到本地，通过 data URL 内联到 CSS 里，避免网络请求：
+
+```css
+@font-face {
+  font-family: 'MyChineseFont';
+  src: url('data:font/woff2;base64,...') format('woff2');
+  font-display: block;
+}
+```
+
+在页面里显式强制指定字体，避免走到 fallback。
+
+## 一些想法
+
+用 AI 工具把 HTML 转视频这个思路本身很有价值——用写网页的方式做视频，比传统视频编辑灵活得多。但现有的 AI 视频工具在处理「把已有内容转成视频」这个场景时，还有很多边角问题：
+
+- 字体支持：不同语言的字幕/文字需要对应的字体文件，工具的预设覆盖面有限
+- 动态内容：如果 HTML 里有 JS 动画，时间轴对齐是个问题
+- 资源加载：外部 CDN 资源在无头浏览器环境里可能加载失败
+
+HyperFrame 是个很不错的框架，架构很清晰。如果你也要用它来处理中文内容，提前把字体问题处理好能省不少时间。
