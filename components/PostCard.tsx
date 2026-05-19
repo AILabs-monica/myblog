@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Post } from '@/lib/posts'
+import ViewCounter from './ViewCounter'
 
 export default function PostCard({ post }: { post: Post }) {
   return (
@@ -27,6 +28,8 @@ export default function PostCard({ post }: { post: Post }) {
           )}
           <span>·</span>
           <span>{post.readingTime} 分钟阅读</span>
+          <span>·</span>
+          <ViewCounter slug={post.slug} />
         </div>
         <h2 style={{
           fontSize: '1.125rem', fontWeight: 800,
