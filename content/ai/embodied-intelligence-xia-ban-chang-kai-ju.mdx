@@ -1,0 +1,117 @@
+---
+title: "具身智能下半场开局了：不搞数据的人形机器人公司，很可能要出局"
+date: "2026-05-19"
+description: "具身智能的竞赛，已经从「谁的算法更牛」切换到了「谁的数据闭环更高效」。鲸跃动力获星海图数千万元种子轮投资，行业进入数据效率驱动的下半场。"
+tags: ["具身智能", "机器人", "AI创业", "鲸跃动力", "星海图", "人形机器人"]
+---
+
+<p class="mb-4 leading-relaxed">在小说阅读器读本章</p>
+
+<p class="mb-4 leading-relaxed">去阅读</p>
+
+<p class="mb-4 leading-relaxed">在小说阅读器中沉浸阅读</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4">今天发生的三件事，串起来看，具身智能的牌局已经翻篇了。</h2>
+
+<p class="mb-4 leading-relaxed"><strong>第一件</strong>，前北京人形机器人创新中心数据负责人李广宇创业，公司叫鲸跃动力，星海图独家领投了数千万种子轮。方向很明确——不造通用人形，专攻「数据+模型+末端执行」的闭环。</p>
+
+<p class="mb-4 leading-relaxed"><strong>第二件</strong>，星海图在投资理由里写了一句让整个行业都得细品的话：「具身智能的下半场，拼的是数据效率×模型泛化×末端执行的系统能力。」</p>
+
+<p class="mb-4 leading-relaxed"><strong>第三件</strong>，苏州一批非人形机器人公司，融资才650万，收入干到了4500万。人形还在烧钱，非人形已经悄悄赚钱了。</p>
+
+<p class="mb-4 leading-relaxed">这三件事指向同一个答案：<strong>具身智能的竞赛，已经从「谁的算法更牛」切换到了「谁的数据闭环更高效」。</strong></p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4">李广宇为什么在这个时间点创业？</h2>
+
+<p class="mb-4 leading-relaxed">鲸跃动力的创始人李广宇，不是那种"从大厂出来刷脸融资"的创业者。</p>
+
+<p class="mb-4 leading-relaxed">他博士毕业于USC电子工程系，之前的履历很有意思——先是在滴滴和轻舟智航做自动驾驶数据闭环，后来去北京人形机器人创新中心，从0到1搭建了具身数据和灵巧操作团队。RoboMIND多模态数据集、慧思开物具身智能体，这些行业里叫得上名字的项目，都是他主导的。</p>
+
+<p class="mb-4 leading-relaxed">两条线交叉：自动驾驶的数据闭环经验 + 具身智能的数据基建经验。</p>
+
+<p class="mb-4 leading-relaxed">行业里的人都知道，自动驾驶过去十年的核心突破，不是什么灵光一现的算法，而是数据闭环——采集、清洗、标注、训练、仿真、部署，然后循环回来。特斯拉能跑出来，不是因为它的AI genius比其他家多，而是它路面上跑的车多，数据回传量大，闭环转得快。</p>
+
+<p class="mb-4 leading-relaxed">李广宇现在做的事情，就是把自动驾驶那套数据闭环方法论，搬到具身智能上。</p>
+
+<p class="mb-4 leading-relaxed">他的判断很直接：<strong>过度追求超大模型的复杂度没有必要。真实数据 + 场景化模型 + 末端执行形成闭环，就能快速工程化交付。</strong></p>
+
+<p class="mb-4 leading-relaxed">说白了，别想着一步到位造一个"天网"，先让机器人在具体场景里跑起来、收数据、迭代。</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4">别搞错了，具身智能的瓶颈不是算法，是数据</h2>
+
+<p class="mb-4 leading-relaxed">现在市面上大多数具身智能公司，犯的是同一个错误：把模型当成了护城河。</p>
+
+<p class="mb-4 leading-relaxed">他们觉得，只要把大模型的参数垒上去，机器人自然就"开悟"了。但现实是，哪怕是目前最先进的通用大模型，放到真实物理环境里，连"把杯子放到托盘上"这种基础操作，稳定性都做不好。</p>
+
+<p class="mb-4 leading-relaxed">为什么？因为物理世界的交互，不是token预测能解决的。你需要知道摩擦系数、重力方向、物体形变趋势、力反馈阈值，这些数据，不存在于任何公开训练集里，只能在真实场景中一遍遍采集。</p>
+
+<p class="mb-4 leading-relaxed">李广宇在鲸跃动力的方案是三条腿走路：</p>
+
+<p class="mb-4 leading-relaxed"><strong>第一条，自研数据采集系统。</strong> Ego-centric（第一人称视角）+ UMI（通用操作接口），能做到亚毫米级位姿定位、亚毫秒级多源时间同步。这意味着机器人在操作时，视觉、力觉、位姿、环境交互信号是精确对齐的，而不是像大多数方案那样，"摄像头看到A，机械臂感知到B，两者差了几百毫秒"。</p>
+
+<p class="mb-4 leading-relaxed"><strong>第二条，百万小时级数据管线。</strong> 采集只是第一步。清洗、标注、分析——鲸跃动力的管线能做到百万小时级别。同时引入Human-in-the-Loop，人工即时纠偏。</p>
+
+<p class="mb-4 leading-relaxed"><strong>第三条，自研3D世界模型。</strong> 不是那种"识别出这是一张桌子"的视觉模型，而是能理解重力、摩擦、形变、交互边界的物理认知引擎。机器人"看到"一个杯子，它知道的不是"这是一个杯子"，而是"这个杯子的重心在这里，材质是陶瓷，表面摩擦系数大概是多少，抓取需要施加多大的力才能拿稳而不捏碎"。</p>
+
+<p class="mb-4 leading-relaxed">这就是从"感知-执行"到"认知-预测-自适应"的跃迁。</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4">星海图的投资逻辑，说透了行业的下一站</h2>
+
+<p class="mb-4 leading-relaxed">星海图在这轮投资中说了一段话，值得每个关注具身智能的人认真读一遍：</p>
+
+<p class="mb-4 leading-relaxed">"具身智能的下半场，拼的是'数据效率×模型泛化×末端执行'的系统能力。"</p>
+
+<p class="mb-4 leading-relaxed">注意这三个关键词的排序：<strong>数据效率排第一，模型泛化排第二，末端执行排第三。</strong></p>
+
+<p class="mb-4 leading-relaxed">这不是随便排的。星海图认为，数据效率决定了你能否以极低的边际成本，将机器人的操作能力泛化到新物料、新载具、新场地。模型泛化决定了这个能力上限有多高。末端执行决定了你能不能真的在物理世界里把事情做了。</p>
+
+<p class="mb-4 leading-relaxed">三者的乘积，才是具身智能公司的真实竞争力。</p>
+
+<p class="mb-4 leading-relaxed">反过来说，如果你数据采集效率低，模型再大也是空中楼阁。如果你数据闭环转得慢，末端执行再精准也只是快速迭代不起来的手工活。</p>
+
+<p class="mb-4 leading-relaxed">鲸跃动力选了一个很聪明的切入点：物料搬运装卸（Material Handling）。</p>
+
+<p class="mb-4 leading-relaxed">这个场景的好处是：需求高频、标准统一（托盘、货架、传送带）、ROI容易算。客户把机器人嵌入现有业务流，室内外全场景自主移动、高精度搬运、柔性装卸，直接替代人从事Deadly/Difficult/Dirty/Duplicate的四D作业。</p>
+
+<p class="mb-4 leading-relaxed">而且，李广宇团队的背景决定了他们能打硬仗——来自极智嘉、新石器、理想、小米、滴滴的核心骨干，覆盖数据、模型、硬件、软件、全球化商务全链条。见惯了大规模交付的阵仗。</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4">那个650万赚4500万的故事，才是真反转</h2>
+
+<p class="mb-4 leading-relaxed">聊完鲸跃动力，必须说今天36氪报道的另一个故事。</p>
+
+<p class="mb-4 leading-relaxed">苏州一批非人形机器人公司，融资总额加起来才650万，但营收做到了4500万。ROI将近7倍。而很多融了上亿的人形机器人公司，商业化收入几乎为零。你敢信？</p>
+
+<p class="mb-4 leading-relaxed">这些公司做的不是人形，而是轮式或履带式的专用机器人。在仓储物流、产线搬运、巡检等场景里，不需要双足行走，不需要灵巧手指，不需要"类人"的外观。它们只要做一件事：在这个特定场景里，比人便宜、比人稳定、比人不容易累。</p>
+
+<p class="mb-4 leading-relaxed">这就够了。</p>
+
+<p class="mb-4 leading-relaxed">这才是真正的反转：<strong>你花了一个亿造人形明星，隔壁公司花了650万做了个轮子机器人，已经在给客户赚钱了。</strong></p>
+
+<p class="mb-4 leading-relaxed">不是说人形路线不对。长期看，通用人形一定是终局。但终局之前的这几年，谁活下来，取决于你能不能产生正向现金流，而不是靠融资续命。</p>
+
+<h2 class="text-2xl font-bold mt-8 mb-4">所以，我们现在该做什么？</h2>
+
+<p class="mb-4 leading-relaxed">如果你是创业者，认真问问自己：我的数据闭环转起来了吗？采集的是什么数据？每分钟产生多少有效数据？数据回流到模型迭代的周期是多长？</p>
+
+<p class="mb-4 leading-relaxed">如果你回答不了这几个问题，那你可能还在"做demo"的阶段，而不是"做产品"。</p>
+
+<p class="mb-4 leading-relaxed">如果你是投资人，可以看看手里的portfolio：他们的数据采集效率怎么样？有没有专用数据管线？还是只是用公开数据集训练了一个demo？</p>
+
+<p class="mb-4 leading-relaxed">李广宇在接受采访时说的一句话我觉得特别清醒：<strong>"未来的赢家，是那些能用最精准数据撬动最大泛化边界、并用最高密度占领核心场景的场景型机器人公司。"</strong></p>
+
+<p class="mb-4 leading-relaxed">场景型，不是通用型。精准数据，不是海量公开数据。最高密度占领，不是铺最广的面。</p>
+
+<p class="mb-4 leading-relaxed">具身智能的下半场，大门已经开了。你要是不进来，明年可能连桌都上不了。你准备好了吗？</p>
+
+<hr class="my-8 border-t-2 border-gray-300" />
+
+<h2 class="text-xl font-bold mt-8 mb-4">引用来源</h2>
+
+<ol class="list-decimal list-inside mb-4 space-y-2">
+  <li>鲸跃动力获星海图数千万元种子轮投资 — 36氪 <a href="https://36kr.com/p/3814860909600261" class="text-blue-600 underline hover:text-blue-800" target="_blank" rel="noopener noreferrer">https://36kr.com/p/3814860909600261</a></li>
+  <li>融资650万，收入4500万：苏州非人形机器人案例 — 36氪</li>
+  <li>宇树发布载人变形机甲GD01 — 机器之心周报</li>
+  <li>星海图投资逻辑声明 — 36氪鲸跃动力报道内引述</li>
+</ol>
+
+<p class="text-sm text-gray-500 mt-4">数据来源：36氪、机器之心、TechCrunch | 信息截止2026.05.19</p>
