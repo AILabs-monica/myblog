@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { getPostBySlug, getAllPosts } from '@/lib/posts'
 import matter from 'gray-matter'
 import ViewCounter from '@/components/ViewCounter'
+import ShareButtons from '@/components/ShareButtons'
 
 export const dynamic = 'force-static'
 
@@ -226,6 +227,8 @@ export default async function PostPage({ params }: Props) {
       </header>
 
       <MdxContent source={post.content || ''} />
+
+      <ShareButtons slug={post.slug} title={post.title} />
     </article>
   )
 }
