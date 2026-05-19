@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: 'AI',
   description: 'AI 技术文章',
   alternates: {
-    canonical: 'https://myblog.vercel.app/ai',
+    canonical: 'https://monica-aiblog.vercel.app/ai',
   },
   openGraph: {
     title: 'AI — Monica\'s Blog',
     description: 'AI 技术文章',
-    url: 'https://myblog.vercel.app/ai',
+    url: 'https://monica-aiblog.vercel.app/ai',
   },
 }
 

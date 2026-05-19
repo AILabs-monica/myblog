@@ -7,9 +7,9 @@ export const metadata: Metadata = {
     template: "%s — Monica's Blog",
   },
   description: "AI 技术、独立开发、产品思考 — Monica 的个人博客",
-  metadataBase: new URL("https://myblog.vercel.app"),
+  metadataBase: new URL("https://monica-aiblog.vercel.app"),
   alternates: {
-    canonical: "https://myblog.vercel.app",
+    canonical: "https://monica-aiblog.vercel.app",
     types: {
       "application/rss+xml": "/feed.xml",
     },
@@ -18,12 +18,15 @@ export const metadata: Metadata = {
     title: "Monica's Blog",
     description: "AI 技术、独立开发、产品思考",
     type: "website",
-    url: "https://myblog.vercel.app",
+    url: "https://monica-aiblog.vercel.app",
     locale: "zh_CN",
   },
   robots: {
     index: true,
     follow: true,
+  },
+  verification: {
+    google: "googlec84586560d4d2508",
   },
 }
 

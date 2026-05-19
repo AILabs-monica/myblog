@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: '产品',
   description: '独立开发与产品思考',
   alternates: {
-    canonical: 'https://myblog.vercel.app/products',
+    canonical: 'https://monica-aiblog.vercel.app/products',
   },
   openGraph: {
     title: '产品 — Monica\'s Blog',
     description: '独立开发与产品思考',
-    url: 'https://myblog.vercel.app/products',
+    url: 'https://monica-aiblog.vercel.app/products',
   },
 }
 

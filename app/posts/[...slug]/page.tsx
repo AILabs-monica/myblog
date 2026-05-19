@@ -27,12 +27,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: post.title,
     description: post.description,
     alternates: {
-      canonical: `https://myblog.vercel.app/posts/${slugStr}`,
+      canonical: `https://monica-aiblog.vercel.app/posts/${slugStr}`,
     },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://myblog.vercel.app/posts/${slugStr}`,
+      url: `https://monica-aiblog.vercel.app/posts/${slugStr}`,
       type: 'article',
       publishedTime: post.date,
       tags: post.tags,

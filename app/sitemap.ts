@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const posts = getAllPosts()
 
   const postUrls = posts.map((post) => ({
-    url: `https://myblog.vercel.app/posts/${post.slug}`,
+    url: `https://monica-aiblog.vercel.app/posts/${post.slug}`,
     lastModified: post.date ? new Date(post.date) : new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
@@ -13,25 +13,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: 'https://myblog.vercel.app',
+      url: 'https://monica-aiblog.vercel.app',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://myblog.vercel.app/ai',
+      url: 'https://monica-aiblog.vercel.app/ai',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://myblog.vercel.app/products',
+      url: 'https://monica-aiblog.vercel.app/products',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: 'https://myblog.vercel.app/about',
+      url: 'https://monica-aiblog.vercel.app/about',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.5,
