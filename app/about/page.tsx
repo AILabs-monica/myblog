@@ -3,6 +3,14 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'About',
   description: '关于我和这个博客',
+  alternates: {
+    canonical: 'https://myblog.vercel.app/about',
+  },
+  openGraph: {
+    title: 'About — Monica\'s Blog',
+    description: '关于我和这个博客',
+    url: 'https://myblog.vercel.app/about',
+  },
 }
 
 export default function AboutPage() {

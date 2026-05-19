@@ -20,12 +20,23 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const post = getPostBySlug(slug.join('/'))
+  const slugStr = slug.join('/')
+  const post = getPostBySlug(slugStr)
   if (!post) return {}
   return {
     title: post.title,
     description: post.description,
-    openGraph: { title: post.title, description: post.description },
+    alternates: {
+      canonical: `https://myblog.vercel.app/posts/${slugStr}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `https://myblog.vercel.app/posts/${slugStr}`,
+      type: 'article',
+      publishedTime: post.date,
+      tags: post.tags,
+    },
   }
 }
 

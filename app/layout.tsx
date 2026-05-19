@@ -6,17 +6,24 @@ export const metadata: Metadata = {
     default: "Monica's Blog",
     template: "%s — Monica's Blog",
   },
-  description: "AI 技术、独立开发、产品思考",
+  description: "AI 技术、独立开发、产品思考 — Monica 的个人博客",
   metadataBase: new URL("https://myblog.vercel.app"),
+  alternates: {
+    canonical: "https://myblog.vercel.app",
+    types: {
+      "application/rss+xml": "/feed.xml",
+    },
+  },
   openGraph: {
     title: "Monica's Blog",
     description: "AI 技术、独立开发、产品思考",
     type: "website",
+    url: "https://myblog.vercel.app",
+    locale: "zh_CN",
   },
-  alternates: {
-    types: {
-      "application/rss+xml": "/feed.xml",
-    },
+  robots: {
+    index: true,
+    follow: true,
   },
 }
 

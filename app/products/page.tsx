@@ -5,6 +5,14 @@ import PostCard from '@/components/PostCard'
 export const metadata: Metadata = {
   title: '产品',
   description: '独立开发与产品思考',
+  alternates: {
+    canonical: 'https://myblog.vercel.app/products',
+  },
+  openGraph: {
+    title: '产品 — Monica\'s Blog',
+    description: '独立开发与产品思考',
+    url: 'https://myblog.vercel.app/products',
+  },
 }
 
 export default function ProductsPage() {

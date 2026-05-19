@@ -5,6 +5,14 @@ import PostCard from '@/components/PostCard'
 export const metadata: Metadata = {
   title: 'AI',
   description: 'AI 技术文章',
+  alternates: {
+    canonical: 'https://myblog.vercel.app/ai',
+  },
+  openGraph: {
+    title: 'AI — Monica\'s Blog',
+    description: 'AI 技术文章',
+    url: 'https://myblog.vercel.app/ai',
+  },
 }
 
 export default function AIPage() {
