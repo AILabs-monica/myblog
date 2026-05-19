@@ -199,6 +199,9 @@ export default async function PostPage({ params }: Props) {
           <span>{post.readingTime} 分钟阅读</span>
           <span>·</span>
           <ViewCounter slug={post.slug} />
+          <div style={{ marginLeft: 'auto' }}>
+            <ShareButtons slug={post.slug} title={post.title} />
+          </div>
         </div>
         <h1 style={{
           fontSize: '1.875rem', fontWeight: 700, fontStyle: 'italic',
@@ -227,8 +230,6 @@ export default async function PostPage({ params }: Props) {
       </header>
 
       <MdxContent source={post.content || ''} />
-
-      <ShareButtons slug={post.slug} title={post.title} />
     </article>
   )
 }

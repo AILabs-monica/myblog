@@ -12,12 +12,17 @@ export default function ShareButtons({ slug, title }: { slug: string; title: str
     {
       name: 'Twitter',
       href: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
-      label: 'X',
+      label: '𝕏',
     },
     {
       name: '微博',
       href: `https://service.weibo.com/share/share.php?title=${encodedTitle}&url=${encodedUrl}`,
       label: '微博',
+    },
+    {
+      name: '知乎',
+      href: `https://zhuanlan.zhihu.com/write?topic=${encodedTitle}&utm_source=${encodedUrl}`,
+      label: '知乎',
     },
   ]
 
@@ -29,42 +34,38 @@ export default function ShareButtons({ slug, title }: { slug: string; title: str
 
   return (
     <div style={{
-      marginTop: '3rem', paddingTop: '1.5rem',
-      borderTop: '1px solid var(--border)',
+      display: 'flex', alignItems: 'center', gap: '0.375rem',
+      flexWrap: 'wrap',
     }}>
-      <div style={{
-        display: 'flex', alignItems: 'center', gap: '0.75rem',
-        fontSize: '0.875rem', color: 'var(--text-2)',
-      }}>
-        <span style={{ fontWeight: 600 }}>分享到</span>
-        {shareLinks.map((link) => (
-          <a
-            key={link.name}
-            href={link.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: '0.375rem 0.75rem', borderRadius: 'var(--radius-sm)',
-              border: '2.5px solid #111', background: 'var(--surface)',
-              color: 'var(--text-1)', fontWeight: 700, fontSize: '0.75rem',
-              textDecoration: 'none', cursor: 'pointer',
-            }}
-          >
-            {link.label}
-          </a>
-        ))}
-        <button
-          onClick={copyLink}
+      {shareLinks.map((link) => (
+        <a
+          key={link.name}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={`分享到 ${link.name}`}
           style={{
-            padding: '0.375rem 0.75rem', borderRadius: 'var(--radius-sm)',
-            border: '2.5px solid #111', background: copied ? 'var(--accent-3)' : 'var(--surface)',
+            padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-sm)',
+            border: '2.5px solid #111', background: 'var(--surface)',
             color: 'var(--text-1)', fontWeight: 700, fontSize: '0.75rem',
-            cursor: 'pointer',
+            textDecoration: 'none', cursor: 'pointer',
           }}
         >
-          {copied ? '已复制' : '复制链接'}
-        </button>
-      </div>
+          {link.label}
+        </a>
+      ))}
+      <button
+        onClick={copyLink}
+        title="复制链接"
+        style={{
+          padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-sm)',
+          border: '2.5px solid #111', background: copied ? 'var(--accent-3)' : 'var(--surface)',
+          color: 'var(--text-1)', fontWeight: 700, fontSize: '0.75rem',
+          cursor: 'pointer',
+        }}
+      >
+        {copied ? '✓' : '🔗'}
+      </button>
     </div>
   )
 }
