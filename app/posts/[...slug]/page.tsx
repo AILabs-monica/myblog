@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPostBySlug, getAllPosts } from '@/lib/posts'
 import matter from 'gray-matter'
+import ViewCounter from '@/components/ViewCounter'
 
 export const dynamic = 'force-static'
 
@@ -184,6 +185,8 @@ export default async function PostPage({ params }: Props) {
           )}
           <span>·</span>
           <span>{post.readingTime} 分钟阅读</span>
+          <span>·</span>
+          <ViewCounter slug={post.slug} />
         </div>
         <h1 style={{
           fontSize: '1.875rem', fontWeight: 700, fontStyle: 'italic',
