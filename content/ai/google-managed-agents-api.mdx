@@ -1,0 +1,104 @@
+---
+title: "Google Managed Agents API：一次调用部署Agent，企业Agent成本降90%？——我拆解了它的商业逻辑"
+date: "2026-05-22"
+description: "Google I/O 2026发布了Managed Agents API。一次API调用部署AI Agent，Google全包环境、沙箱、工具链、执行循环。这笔账到底划不划算？"
+tags: ["AI", "AI Agent", "Google"]
+---
+
+<p class="mb-4 leading-relaxed">Google I/O 2026结束后，很多人都在聊Gemini 3.5多强、搜索框25年首改。但有一条消息我反复读了三遍——Google发布了Managed Agents API。</p>
+
+<p class="mb-4 leading-relaxed">官方说法是：你只需要一次API调用，Google帮你搞定Agent的部署环境、沙箱、工具链、执行循环。</p>
+
+<p class="mb-4 leading-relaxed">翻译成人话：原来部署一个AI Agent，工程师需要花几周的时间搭环境、配工具、写编排逻辑。现在，把代码发过去，Google全包了。</p>
+
+<p class="mb-4 leading-relaxed">这听起来很美。但问题在于——你把执行层控制权给了Google。而这笔账，我算完之后发现，对大多数企业来说，可能真的划算。</p>
+
+<p class="mb-4 leading-relaxed">我花了点儿时间研究这个东西背后的商业逻辑。结论是——Google这次不是在做一个"更好的API"，而是在重新定义企业AI Agent的部署范式。而这个变局里，有赢家，也有输家。</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">先说Managed Agents到底是什么</h2>
+
+<p class="mb-4 leading-relaxed">在这之前，企业部署一个AI Agent大概要经过这些步骤：</p>
+
+<p class="mb-4 leading-relaxed">先搭执行环境——服务器、容器、沙箱。再写工具调用基础设施，Agent要能读数据库、调API、操作文件。然后设计编排逻辑，Agent怎么规划步骤、怎么在失败时重试、怎么在不同的工具之间路由。最后过安全审核，数据访问权限、输出过滤、审计日志。</p>
+
+<p class="mb-4 leading-relaxed">整套流程走下来，一个中等复杂的Agent，2-4周是保守估计。如果是金融、医疗等合规要求高的行业，时间翻倍。</p>
+
+<p class="mb-4 leading-relaxed">Google的做法是把所有这些抽象成一层"托管执行层"，你只需要在Gemini API里调一个接口，写上Agent的行为逻辑，剩下的环境、沙箱、安全、编排全部由Google管理。</p>
+
+<p class="mb-4 leading-relaxed">Ramp的工程师在Google的公告里说了一句很实在的话："原来Agent运行时需要自己搭建，现在它直接跑在平台上——开发者可以专注于定义Agent的领域行为，然后以完全不同的速度迭代。"</p>
+
+<p class="mb-4 leading-relaxed">注意这里的措辞——"以完全不同的速度迭代"。这不是快20%或30%的问题，是从数周变成一次调用。对做产品的人来说，这个差距是量级的。</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">为什么Google能做，别人做不了？</h2>
+
+<p class="mb-4 leading-relaxed">要回答这个问题，得先看看Anthropic和OpenAI的Agent平台策略。</p>
+
+<p class="mb-4 leading-relaxed">Anthropic的Claude Managed Agents是把编排层放在模型层——模型自己负责推理和编排，企业控制执行环境。AWS Bedrock AgentCore是提供托管工具链，但执行层仍然可以自己管。OpenAI的Codex和Managed Agents也是类似思路——给你Agent能力，部署你自己来。</p>
+
+<p class="mb-4 leading-relaxed">Google这次的不同之处在于：它把模型、工具链、沙箱、安全、执行循环全都优化在一起，全部跑在Google管理的基础设施上。这是一个从下到上完全垂直整合的方案。</p>
+
+<p class="mb-4 leading-relaxed">为什么Google能做？因为它有GCP、有Kubernetes、有Vertex AI、有大模型Gemini、有搜索索引、有海量的数据中心。它不需要依赖第三方。它可以把Agent从模型到数据中心都自己包了。这就像苹果做iPhone——芯片是自己的、系统是自己的、应用商店也是自己的。</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">这笔账到底划不划算？</h2>
+
+<p class="mb-4 leading-relaxed">我在分析任何技术趋势时，都会算一笔"成本-控制权"的账。对于Managed Agents，这个问题尤其尖锐：</p>
+
+<p class="mb-4 leading-relaxed"><strong>你省了多少？</strong></p>
+
+<p class="mb-4 leading-relaxed">一个中等规模的企业，假设要部署5个Agent，每个需要3周的工程时间。按一个资深后端工程师月薪4-5万算，仅部署阶段的人工成本就在10-15万。这还不算持续维护——Agent跑起来之后，环境更新、安全补丁、扩容、监控，每个月还要搭进去至少一个工程师20%的时间。</p>
+
+<p class="mb-4 leading-relaxed">如果用Google Managed Agents，这部分成本几乎归零。你只需要写Agent的行为逻辑，剩下的Google全包了。你的工程师可以去干更有价值的事——优化Agent的行为、处理边缘案例、跟业务团队对齐需求。</p>
+
+<p class="mb-4 leading-relaxed"><strong>你放弃了什么？</strong></p>
+
+<p class="mb-4 leading-relaxed">执行层的控制权。Agent的沙箱环境、工具调用、数据访问——全都跑在Google的基础设施上。这意味着Google能看到你的Agent在做什么、调用了哪些工具、消耗了多少算力。对于合规要求极高的行业（金融、医疗、政府），这是一个需要认真评估的风险。</p>
+
+<p class="mb-4 leading-relaxed">另外还有一个更微妙的风险——当你的Agent完全跑在Google的平台上，切换到其他模型供应商的成本会显著上升。这就是所谓的"锁定效应"。</p>
+
+<p class="mb-4 leading-relaxed"><strong>所以到底划不划算？</strong></p>
+
+<p class="mb-4 leading-relaxed">我的判断是：对于90%的企业，划算。</p>
+
+<p class="mb-4 leading-relaxed">理由很简单——大多数企业的AI Agent现在还处于探索和验证阶段，快速试错的收益远大于控制执行层的收益。先把Agent跑起来，看到业务效果，再考虑架构迁移和自主控制。如果连Agent都没跑起来，谈控制权意义不大。</p>
+
+<p class="mb-4 leading-relaxed">但对那10%的企业——金融核心系统、国家安全相关、医疗数据敏感——谨慎是对的。Google的方案目前只适合非关键业务Agent的快速部署。</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">你以为Google在跟Anthropic抢客户，其实它在抢谁的生意？</h2>
+
+<p class="mb-4 leading-relaxed">看到Google Managed Agents API的第一反应，大多数人都会觉得这是Google在跟Anthropic、OpenAI打Agent平台战。</p>
+
+<p class="mb-4 leading-relaxed">但我认为真正的目标不是他们。</p>
+
+<p class="mb-4 leading-relaxed">Google真正打击的是中间件公司。那些做Agent编排框架、工具链集成、部署平台的创业公司。</p>
+
+<p class="mb-4 leading-relaxed">过去两年，AI Agent生态里涌现了一大批"中间层"创业公司：LangChain（编排框架）、AutoGPT（Agent平台）、各种Agent部署和监控工具。它们的商业模式建立在"大模型公司不会碰部署层"这个假设上。</p>
+
+<p class="mb-4 leading-relaxed">Google Managed Agents把这个假设打碎了。</p>
+
+<p class="mb-4 leading-relaxed">当Google说"你的Agent从模型到沙箱到执行循环，我全包了"，中间件公司的存在价值就缩水了一大半。就像AWS Lambda出现之后，服务器管理公司的生意就没了。</p>
+
+<p class="mb-4 leading-relaxed">XYO的CEO Arie Trouw在接受VentureBeat采访时说了一个很到位的警告："开发者会把过去确定性的服务换成现在概率性的服务，这可能在最好的情况下引入不可预测的行为，在最坏的情况下导致数据损坏。这是一个典型的'拿着锤子看什么都像钉子'的问题。"</p>
+
+<p class="mb-4 leading-relaxed">翻译一下：当部署Agent变得太容易，你可能会在不需要Agent的地方也用Agent。然后发现AI的判断是有概率性的，不是每次都能给出正确答案。</p>
+
+<p class="mb-4 leading-relaxed">这不是说Google错了。恰恰相反，这个产品在商业上非常正确。它精确地抓住了当前企业AI落地的最大痛点：部署太慢。解决了这个痛点，它就锁住了用户。</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900">所以现在该做什么呢？</h2>
+
+<p class="mb-4 leading-relaxed"><strong>如果你是CTO或技术负责人</strong>——下周就让团队去试用Google AI Studio里的Managed Agents模板。别等产品正式GA。现在就用一个非关键业务Agent做PoC，亲自验证"一次调用部署"是不是真的。如果是真的，重新审视你的Agent技术架构——也许不需要再自建编排层了。</p>
+
+<p class="mb-4 leading-relaxed"><strong>如果你是创业者</strong>——如果你在做Agent编排框架、部署工具、中间件，现在是时候重新评估你的护城河了。当模型供应商开始自建部署层，你的差异化在哪？是更细粒度的控制？还是对特定行业的深度理解？</p>
+
+<p class="mb-4 leading-relaxed"><strong>如果你是投资人</strong>——关注"被Google Managed Agents冲击的公司"和"受益于Google Managed Agents的公司"。前者是中间件/编排层公司，后者是Agent应用层公司和推理基础设施公司。当Agent部署成本趋近于零，应用层的创新会爆发。</p>
+
+<p class="mb-4 leading-relaxed">最后说一句：我见过太多技术趋势从"太酷了"到"怎么大家都在用"之间的时间差。Google Managed Agents API的发布，可能就是这个时间差开始缩小的一天。</p>
+
+<hr class="my-12">
+
+<h2 class="text-xl font-bold mb-4">引用来源</h2>
+<ol class="list-decimal list-inside text-sm text-slate-600 space-y-1">
+  <li>VentureBeat: Google's Managed Agents API分析 — <a href="https://venturebeat.com/ai/googles-managed-agents-api-could-slash-enterprise-agent-deployment-costs-by-90/">VentureBeat</a></li>
+  <li>Google Blog: Managed Agents in Gemini API — <a href="https://developers.googleblog.com/en/managed-agents-in-gemini-api/">Google Developers Blog</a></li>
+  <li>VentureBeat: Anthropic wants to own your agents — <a href="https://venturebeat.com/ai/anthropic-wants-to-own-your-agents-with-new-managed-agent-api-and-certification-program/">VentureBeat</a></li>
+  <li>VentureBeat: Google and AWS split the AI agent stack — <a href="https://venturebeat.com/ai/at-io-2026-google-and-aws-split-the-ai-agent-stack-in-opposite-directions/">VentureBeat</a></li>
+</ol>
