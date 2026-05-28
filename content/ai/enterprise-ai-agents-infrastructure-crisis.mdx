@@ -1,0 +1,102 @@
+---
+title: "The Hidden Infrastructure Crisis Behind Enterprise AI Agents"
+date: "2026-05-29"
+description: "79% of organizations run AI agents in production. 96% plan to expand. But Gartner predicts 40% of projects will be canceled by 2027. The reason isn't model capability — it's three invisible potholes nobody is paving over."
+tags: ["AI", "Infrastructure", "AI Agent", "DevOps", "Agentic AI", "AI Governance", "OpenAI"]
+---
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Here are two numbers that should not coexist in the same industry. Seventy-nine percent of organizations now run AI agents in production. Ninety-six percent plan to expand. This is according to PwC's latest survey. Meanwhile, Gartner predicts that 40% of agentic AI projects will be canceled by the end of 2027 — not because the technology isn't good enough, but because of "poor risk controls."</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">I couldn't stop thinking about this contradiction. So I spent the last week tracing where the money went, where the failures happen, and what the people on the front lines are actually seeing. What I found is a story about infrastructure that nobody is building yet.</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900" style="font-size:15px;">Where the $10 billion went</h2>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Let me trace the money first, because the scale of investment here is genuinely staggering.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">OpenAI Codex hit 4 million weekly active users in April. To help enterprises actually deploy this thing, OpenAI created an entirely new company — the OpenAI Deployment Company — with over $4 billion in committed capital from 19 investment firms including TPG, Goldman Sachs, and SoftBank. They acquired Tomoro to bring 150 Forward Deployed Engineers on board from day one. They partnered with Dell to push Codex into on-premise environments. They partnered with AWS. They partnered with PwC to reshape the office of the CFO. They got FedRAMP Moderate authorization so the U.S. federal government can use it.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">If you read OpenAI's press releases, you'd think the agent era has arrived. The road is paved. The cars are built. The drivers are hired.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">But that's not what I found when I started talking to the engineers who actually run these systems in production.</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900" style="font-size:15px;">Three invisible potholes</h2>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">When I traced the failure patterns across VentureBeat's recent coverage and conversations with infrastructure engineers, the same three gaps kept showing up. OpenAI is building faster cars. Enterprises are driving into potholes at 90 miles per hour.</p>
+
+<h3 class="text-xl font-semibold mt-8 mb-3 text-slate-800" style="font-size:15px;">Pothole 1: RAG gives agents information. It doesn't give them context.</h3>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Every enterprise agent deployment starts the same way. You hook up RAG. You dump your documents into a vector database. The agent retrieves relevant chunks, stuffs them into a prompt, and generates an answer or an action.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">This works fine for chatbots. For agents that actually make decisions and take actions? "It breaks immediately," Wyatt Mayham of Northwest AI Consulting told me. Here's why.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">A retrieved document doesn't tell the agent whether it's still valid. It doesn't flag that a pricing exception expired three months ago. It doesn't know that a safety policy only applies in certain jurisdictions. It doesn't realize the standard operating procedure was updated last month and the version it pulled is now superseded. "Miss any of that, and the agent confidently does the wrong thing," Mayham said.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Here's the part that terrifies me. A 5% error rate per step seems acceptable. But agent workflows chain steps together. Ten steps at 95% reliability each gives you about 60% reliability end-to-end. The compounding error isn't linear — it's catastrophic. This, right here, is why most enterprise agent projects never leave the pilot phase.</p>
+
+<h3 class="text-xl font-semibold mt-8 mb-3 text-slate-800" style="font-size:15px;">Pothole 2: Your remediation agent is a chaos monkey — and nobody tracks it.</h3>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Sayali Patil spent six years building infrastructure automation at Cisco and Splunk. She described a failure mode that I haven't been able to stop thinking about.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">A remediation agent detects elevated latency on a microservice. It decides to restart the service cluster. That action, on its own, is reasonable given what the agent can see.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">What the agent cannot see: three other services are handling peak traffic. The shared connection pool is at 87% utilization. A dependent database is rebuilding an index in the background. The restart triggers a thundering herd against the recovering service. What started as a 200ms latency spike becomes a full cascade.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Here is the structural problem. When a human engineer initiates a change in production, they check dashboards. They look at error budget burn rates. They assess whether dependencies are stable. It's imperfect, but there is a person making a judgment call before anything runs.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">When an agent takes the same action, that judgment call disappears. The agent sees an anomaly. The agent acts. The action is a chaos event. But nobody's chaos engineering program has tested for that specific combination. Nobody's blast radius calculation included the agent as an actor.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">And when the incident review happens, the postmortem says "service restart triggered connection pool saturation" — not "agent acted outside its SLO budget and triggered a cascade." The agent is invisible.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">According to the AI Incidents Database, AI-related incidents rose 21% from 2024 to 2025. Patil believes that number dramatically understates actual exposure because most organizations cannot classify an autonomous agent action as the initiating cause of a cascade. The failure gets logged against infrastructure. The agent walks away clean.</p>
+
+<h3 class="text-xl font-semibold mt-8 mb-3 text-slate-800" style="font-size:15px;">Pothole 3: Agents have amnesia, and nobody's building them a hippocampus.</h3>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Yann Bilien, co-founder of Rippletide, said something that stopped me mid-scroll: "You will never have a fully self-learning model if you are regressing every time."</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">This is exactly what happens with enterprise agents today. Classic supervised fine-tuning leads to catastrophic forgetting — the model learns a new skill and silently overwrites the previous one. What an agent learned in Task 4 doesn't carry over to Task 5. Every interaction starts from zero.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">I asked Bilien what the most common failure pattern looked like. He described a customer support agent that handles the same query correctly on Monday, incorrectly on Tuesday, and confidently wrong on Wednesday — because nothing in its architecture prevents regression. There is no "freeze" on validated behavior. There is no compound learning.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Bilien's team is now building something called a Decision Context Graph — a neuro-symbolic system that encodes rules, exceptions, and decisions with explicit temporal scoping. When an agent discovers a working solution, the graph freezes that sequence. Future exploration starts from that stable base. "This determinism is key for agents to run reliably at scale," he told me. Without it, every agent deployment is a probabilistic gamble over unbounded data, and nobody can trace why a wrong decision was made.</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900" style="font-size:15px;">The people building safety nets while everyone else is building faster cars</h2>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">I found one company that seems to understand all three potholes simultaneously. Resolve AI was founded by Spiros Xanthos and Mayank Agarwal, the co-creators of OpenTelemetry. They raised a $35 million seed and then a $125 million Series A at a $1 billion valuation.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Their thesis is simple and audacious: AI-generated code is creating a production-operations crisis, and the only defense is AI itself — but with an architecture that verifies itself.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Here's how it works. When a production alert fires, Resolve doesn't dispatch a single agent. It dispatches a coordinated team. One agent analyzes logs. Another traces metrics. Another audits recent code changes. They pursue hypotheses in parallel, independently verify each other's conclusions, and must construct a complete causal chain before declaring root cause. If the evidence is insufficient, the system says "I found three possible directions but couldn't prove which one" — rather than confidently pointing engineers at the wrong fix.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">The result: a 2x improvement in root cause accuracy on their internal benchmarks. DoorDash reduced time-to-root-cause by 87%. Coinbase, Salesforce, MongoDB, and Zscaler are all paying customers.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">But what impressed me more than the numbers was Xanthos's framing of the trust problem. "We're operating at the frontier here. There's no blueprint for how you build a system like Resolve," he told VentureBeat. "The bar to actually saying 'I have the answer' is very high. A system like this that operates in production cannot be a black box."</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">He's right. And here's the uncomfortable implication: most enterprise agent deployments are black boxes. The code ships. The agent acts. Nobody can trace why. That's not a temporary limitation. It's a structural choice — and it's the choice that separates the 40% of projects that will be canceled from the ones that survive.</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900" style="font-size:15px;">The real infrastructure gap</h2>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">I started this investigation thinking the problem was model capability. Agents aren't smart enough yet. Wait for the next model. Wait for GPT-5.6. That will fix it.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">I ended up finding something completely different.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Patil, the engineer from Cisco and Splunk, described a concept she calls the "resilience budget." Every production system has a real-time absorb capacity — how much additional stress it can take before breaching its SLO commitments. It's a continuously recomputed, consumable resource drawn from four live signal classes: SLO burn rate, P99 latency trend, dependency saturation, and application behavioral signals.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Chaos engineering programs manage this implicitly through human judgment. Agents don't manage it at all. They act completely outside the accounting. And in enterprises where multiple teams run multiple agents simultaneously, Patil told me, the budget is shared but nobody has built the shared ledger.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">She wrote a sentence that I think should be printed on the wall of every ops team: <strong>"The organizations that operate autonomous agents reliably at scale are not the ones with the most sophisticated models. They are the ones that understood — before something went badly wrong — that every agent action is a chaos event and built their governance layer accordingly."</strong></p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">The practical first step is unglamorous: audit every autonomous agent touching infrastructure, map its action surface against your live SLO burn rate signals, and define explicit floor conditions below which the agent is required to wait or escalate. Patil told me most organizations running agents at scale today have several agents acting entirely outside their resilience accounting. "Find them before production does," she said.</p>
+
+<h2 class="text-2xl font-bold mt-10 mb-4 text-slate-900" style="font-size:15px;">What I think happens next</h2>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">The agent revolution isn't failing. It's in the messy middle — the phase where the infrastructure for making things work catches up to the infrastructure for making things exist.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">Every major technology transition goes through this. Cloud had its "shadow IT" crisis. Microservices had their "distributed monolith" era. Containers went through years of "works on my machine."</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">What's different this time is the speed. OpenAI is shipping new models every month. Cursor just hit $2 billion in ARR by giving engineers AI-powered coding — but as Xanthos pointed out, "the more code we ship with AI, the more code we're less familiar with, and the more we need AI to be the defense." Every advance on the creation side widens the operational gap. The infrastructure that catches up first wins.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">My bet: the companies that will lead the agent era aren't the ones with the best models. They're the ones that invest in operational AI infrastructure at the same pace they invest in AI coding tools. They build the budget model before the agent takes its first autonomous action. They treat "I don't know" as a feature, not a bug. They understand that the road from pilot to production isn't paved with better prompts — it's paved with circuit breakers, resilience budgets, and agent architectures that verify themselves.</p>
+
+<p class="mb-4" style="font-size:15px;line-height:1.8;">And if you're a company that deployed agents without any of that? Do Patil's audit. Map every agent against your SLO signals. Define the floor conditions. Do it now. Because the thing about driving 90 miles per hour on a road with no traffic lights is that you only discover the potholes after you've hit them.</p>
+
+<p class="mb-4 text-sm text-slate-500 mt-10" style="font-size:13px;line-height:1.6;">Originally published on HackerNoon · Author: monica · May 29, 2026</p>
