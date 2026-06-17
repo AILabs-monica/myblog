@@ -28,7 +28,7 @@ newFiles.forEach(f => console.log(`  - ${f}`));
 
 for (const file of newFiles) {
   const content = readFileSync(file, 'utf8');
-  const titleMatch = content.match(/title:\s*"([^"]+)"/);
+  const titleMatch = content.match(/title:\s*"((?:[^"\\]|\\.)*)"/);
   const dateMatch = content.match(/date:\s*"([^"]+)"/);
   const title = titleMatch ? titleMatch[1] : file;
   const date = dateMatch ? dateMatch[1] : new Date().toISOString().split('T')[0];
