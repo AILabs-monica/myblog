@@ -87,7 +87,7 @@ async function MdxContent({ source }: { source: string }) {
   const { content } = matter(source)
 
   const trimmed = content.trim()
-  if (trimmed.startsWith('<') && (trimmed.startsWith('<p') || trimmed.startsWith('<h1') || trimmed.startsWith('<h2') || trimmed.startsWith('<h3') || trimmed.startsWith('<section') || trimmed.startsWith('<article') || trimmed.startsWith('<div') || trimmed.startsWith('<svg'))) {
+  if (trimmed.startsWith('<') && (trimmed.startsWith('<p') || trimmed.startsWith('<h1') || trimmed.startsWith('<h2') || trimmed.startsWith('<h3') || trimmed.startsWith('<section') || trimmed.startsWith('<article') || trimmed.startsWith('<div') || trimmed.startsWith('<svg') || trimmed.startsWith('<blockquote'))) {
     return (
       <div
         className="article-content"
